@@ -87,36 +87,6 @@
     </div>
 </div>
 
-<!-- Popup Container -->
-<div class="bugs-pop-overlay" id="bugsPopOverlay">
-    <div class="bugs-pop-container">
-        <button class="bugs-pop-close" id="bugsPopClose">&times;</button>
-        <div class="bugs-pop-content">
-            <!-- Your contact form goes here -->
-            <div class="bugs-pop-form">
-                <form method="post" action="" name="contact-form">
-                    <div class="bugs-pop-up-phone-call">
-                        <a href="tel:+918618829757" class="hover:underline">
-                            <span>+91 8618829757</span>
-                        </a>
-                        <a href="tel:+9110400686" class="hover:underline">
-                            <span>+91 9110400686</span>
-                        </a>
-                    </div>
-                    <span class="tracking-wide text-3xl">Knowledge</span> 
-                    <span class="tracking-wide text-3xl" style="color:#4f86f9">Creed</span>
-                    <h4>Contact Us</h4>
-                    <input type="text" name="name" placeholder="Name" required class="bugs-pop-input">
-                    <input type="text" name="phone" placeholder="Number" required class="bugs-pop-input">
-                    <input type="email" name="email" placeholder="Email" required class="bugs-pop-input">
-                    <textarea name="message" rows="7" placeholder="Your Message" required class="bugs-pop-textarea"></textarea>
-                    <input type="submit" value="Submit" id="bugs-submit">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const popupOverlay = document.getElementById('bugsPopOverlay');
@@ -137,12 +107,22 @@
             document.cookie = name + "=" + value + "; path=/; expires=" + date.toUTCString();
         };
 
-        // Check if the form has been submitted in the last 30 days
-        const popupClosed = sessionStorage.getItem('popupClosed');
+        // Get stored sessionStorage value
+        const getSessionStorage = (key) => {
+            return sessionStorage.getItem(key);
+        };
+
+        // Set sessionStorage value
+        const setSessionStorage = (key, value) => {
+            sessionStorage.setItem(key, value);
+        };
+
+        // Check if the popup was closed
+        const popupClosed = getSessionStorage('popupClosed');
         const formSubmitted = getCookie('formSubmitted');
 
-        if (!formSubmitted) {
-            // Show the popup after 5 seconds if the form has not been submitted
+        if (!formSubmitted && !popupClosed) {
+            // Show the popup after 5 seconds if not submitted and not closed
             setTimeout(() => {
                 popupOverlay.style.display = 'flex';
             }, 5000); // 5000 milliseconds = 5 seconds
@@ -151,21 +131,16 @@
         // Close the popup when the close button is clicked
         popupClose.addEventListener('click', () => {
             popupOverlay.style.display = 'none';
-            // Store that the popup was closed and trigger it to show again after 10 seconds
-            sessionStorage.setItem('popupClosed', 'true');
-            setTimeout(() => {
-                popupOverlay.style.display = 'flex';
-            }, 10000); // 10000 milliseconds = 10 seconds
+            // Store that the popup was closed to prevent showing it again
+            setSessionStorage('popupClosed', 'true');
         });
 
         // Close the popup when clicking outside of it
         popupOverlay.addEventListener('click', (e) => {
             if (e.target === popupOverlay) {
                 popupOverlay.style.display = 'none';
-                sessionStorage.setItem('popupClosed', 'true');
-                setTimeout(() => {
-                    popupOverlay.style.display = 'flex';
-                }, 10000); // Show again after 10 seconds
+                // Store that the popup was closed to prevent showing it again
+                setSessionStorage('popupClosed', 'true');
             }
         });
     });
@@ -176,20 +151,20 @@
 
     form.addEventListener('submit', e => {
         e.preventDefault();
+
         fetch(scriptURL, { method: 'POST', body: new FormData(form) })
             .then(response => {
                 alert("Thank you! Your form has been submitted successfully.");
                 // Set cookie to prevent showing the popup again for 30 days
                 setCookie('formSubmitted', 'true', 30);
+                // Remove sessionStorage item to prevent showing popup again in the current session
                 sessionStorage.removeItem('popupClosed');
+                // Automatically close the popup after submission
+                document.getElementById('bugsPopOverlay').style.display = 'none';
             })
-            .then(() => { window.location.reload(); })
             .catch(error => console.error('Error!', error.message));
     });
 </script>
-
-
-
 
     
 
