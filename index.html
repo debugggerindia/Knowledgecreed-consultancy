@@ -15,6 +15,17 @@
     <!-- Meta Tags -->
     <meta name="description" content="Discover the best colleges in India for MD/MS courses with our comprehensive guide. Get expert counseling, admission tips, and detailed information about top medical institutions to help you make an informed decision for your medical education.">
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16696629962">
+    </script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16696629962');
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
@@ -54,96 +65,106 @@
     </div>
 </div>
 
-    <!-- Popup Container -->
-    <div class="bugs-pop-overlay" id="bugsPopOverlay">
-        <div class="bugs-pop-container">
-            <button class="bugs-pop-close" id="bugsPopClose">&times;</button>
-            <div class="bugs-pop-content">
-                <!-- Your contact form goes here -->
-                <div class="bugs-pop-form">
-                    <form method="post" action="" name="contact-form">
-                        <div class="bugs-pop-up-phone-call">
-                            <a href="tel:+918618829757" class="hover:underline">
-                                <span>+91 8618829757</span>
-                            </a>
-                            <a href="tel:+9110400686" class="hover:underline">
-                                <span>+91 9110400686</span>
-                            </a>
-                        </div>
-                        <span class="tracking-wide text-3xl">Knowledge</span> 
-                        <span class="tracking-wide text-3xl" style="color:#4f86f9">Creed</span>
-                        <h4>Contact Us</h4>
-                        <input type="text" name="name" placeholder="Name" required class="bugs-pop-input">
-                        <input type="text" name="phone" placeholder="Number" required class="bugs-pop-input">
-                        <input type="email" name="email" placeholder="Email" required class="bugs-pop-input">
-                        <textarea name="message" rows="7" placeholder="Your Message" required class="bugs-pop-textarea"></textarea>
-                        <input type="submit" value="Submit" id="bugs-submit">
-                    </form>
-                </div>
+<!-- Popup Container -->
+<div class="bugs-pop-overlay" id="bugsPopOverlay">
+    <div class="bugs-pop-container">
+        <button class="bugs-pop-close" id="bugsPopClose">&times;</button>
+        <div class="bugs-pop-content">
+            <!-- Your contact form goes here -->
+            <div class="bugs-pop-form">
+                <form method="post" action="" name="contact-form">
+                    <div class="bugs-pop-up-phone-call">
+                        <a href="tel:+918618829757" class="hover:underline">
+                            <span>+91 8618829757</span>
+                        </a>
+                        <a href="tel:+9110400686" class="hover:underline">
+                            <span>+91 9110400686</span>
+                        </a>
+                    </div>
+                    <span class="tracking-wide text-3xl">Knowledge</span> 
+                    <span class="tracking-wide text-3xl" style="color:#4f86f9">Creed</span>
+                    <h4>Contact Us</h4>
+                    <input type="text" name="name" placeholder="Name" required class="bugs-pop-input">
+                    <input type="text" name="phone" placeholder="Number" required class="bugs-pop-input">
+                    <input type="email" name="email" placeholder="Email" required class="bugs-pop-input">
+                    <textarea name="message" rows="7" placeholder="Your Message" required class="bugs-pop-textarea"></textarea>
+                    <input type="submit" value="Submit" id="bugs-submit">
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const popupOverlay = document.getElementById('bugsPopOverlay');
-            const popupClose = document.getElementById('bugsPopClose');
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const popupOverlay = document.getElementById('bugsPopOverlay');
+        const popupClose = document.getElementById('bugsPopClose');
 
-            // Get stored item from localStorage
-            const getLocalStorage = (key) => localStorage.getItem(key);
+        // Get stored localStorage value
+        const getLocalStorage = (key) => {
+            return localStorage.getItem(key);
+        };
 
-            // Set item to localStorage with expiration
-            const setLocalStorageWithExpiry = (key, value, expiryInDays) => {
-                const now = new Date();
-                const expiry = now.getTime() + expiryInDays * 24 * 60 * 60 * 1000;
-                const item = { value: value, expiry: expiry };
-                localStorage.setItem(key, JSON.stringify(item));
+        // Set localStorage value
+        const setLocalStorage = (key, value) => {
+            localStorage.setItem(key, value);
+        };
+
+        // Check if the form has been submitted
+        const formSubmitted = getLocalStorage('formSubmitted');
+
+        if (!formSubmitted) {
+            const showPopup = () => {
+                popupOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    popupOverlay.style.display = 'none';
+                    // Show the popup again after 5 seconds if not submitted
+                    if (!getLocalStorage('formSubmitted')) {
+                        showPopup();
+                    }
+                }, 10000); // 5000 milliseconds = 5 seconds
             };
 
-            // Check if the form was submitted and not expired (30 days)
-            const formSubmitted = JSON.parse(getLocalStorage('formSubmitted'));
+            showPopup();
+        }
 
-            if (!formSubmitted || new Date().getTime() > formSubmitted.expiry) {
-                // Show the popup after 5 seconds if the form has not been submitted or expired
-                setTimeout(() => {
-                    popupOverlay.style.display = 'flex';
-                }, 5000); // 5000 milliseconds = 5 seconds
-            }
+        // Close the popup when the close button is clicked
+        popupClose.addEventListener('click', () => {
+            popupOverlay.style.display = 'none';
+        });
 
-            // Close the popup when the close button is clicked
-            popupClose.addEventListener('click', () => {
+        // Close the popup when clicking outside of it
+        popupOverlay.addEventListener('click', (e) => {
+            if (e.target === popupOverlay) {
                 popupOverlay.style.display = 'none';
-            });
-
-            // Close the popup when clicking outside of it
-            popupOverlay.addEventListener('click', (e) => {
-                if (e.target === popupOverlay) {
-                    popupOverlay.style.display = 'none';
-                }
-            });
+            }
         });
+    });
 
-        // Handle form submission
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxw1LVdX8ubQwa7bUBQ78Y6cKT0QblKbNzU5Hjw-oMkIHKJjs4AswpeaXzskWPJWvXv/exec';
-        const form = document.forms['contact-form'];
+    // Handle form submission
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxw1LVdX8ubQwa7bUBQ78Y6cKT0QblKbNzU5Hjw-oMkIHKJjs4AswpeaXzskWPJWvXv/exec';
+    const form = document.forms['contact-form'];
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            
-            const emailInput = form.querySelector('input[name="email"]').value;
+    form.addEventListener('submit', e => {
+        e.preventDefault();
 
-            // Proceed with form submission
-            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-                .then(response => {
-                    alert("Thank you! Your form has been submitted successfully.");
-                    // Save the submitted status to localStorage for 30 days
-                    setLocalStorageWithExpiry('formSubmitted', 'true', 30);
-                    // Automatically close the popup after submission
-                    document.getElementById('bugsPopOverlay').style.display = 'none';
-                })
-                .catch(error => console.error('Error!', error.message));
-        });
-    </script>
+        // Proceed with form submission
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            .then(response => {
+                alert("Thank you! Your form has been submitted successfully.");
+                // Save the submitted status to prevent showing the popup again
+                setLocalStorage('formSubmitted', 'true');
+                // Automatically close the popup after submission
+                document.getElementById('bugsPopOverlay').style.display = 'none';
+            })
+            .catch(error => console.error('Error!', error.message));
+    });
+</script>
+
+
+
+
+    
 
     <header class="bg-[#F1F5F9] shadow-md fixed w-full z-50">
         <div class="dbug-announcement-bar bg-[#1e3a8a] text-white py-4 px-6 text-center">
