@@ -122,43 +122,50 @@
         const popupOverlay = document.getElementById('bugsPopOverlay');
         const popupClose = document.getElementById('bugsPopClose');
 
-        // Get stored localStorage value
-        const getLocalStorage = (key) => {
-            return localStorage.getItem(key);
+        // Get stored cookie value
+        const getCookie = (name) => {
+            let matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([.$?*|{}()[]\\\/+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
         };
 
-        // Set localStorage value
-        const setLocalStorage = (key, value) => {
-            localStorage.setItem(key, value);
+        // Set cookie value with expiration in 30 days
+        const setCookie = (name, value, days) => {
+            let date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = name + "=" + value + "; path=/; expires=" + date.toUTCString();
         };
 
-        // Check if the form has been submitted
-        const formSubmitted = getLocalStorage('formSubmitted');
+        // Check if the form has been submitted in the last 30 days
+        const popupClosed = sessionStorage.getItem('popupClosed');
+        const formSubmitted = getCookie('formSubmitted');
 
         if (!formSubmitted) {
-            const showPopup = () => {
+            // Show the popup after 5 seconds if the form has not been submitted
+            setTimeout(() => {
                 popupOverlay.style.display = 'flex';
-                setTimeout(() => {
-                    popupOverlay.style.display = 'none';
-                    // Show the popup again after 5 seconds if not submitted
-                    if (!getLocalStorage('formSubmitted')) {
-                        showPopup();
-                    }
-                }, 10000); // 5000 milliseconds = 5 seconds
-            };
-
-            showPopup();
+            }, 5000); // 5000 milliseconds = 5 seconds
         }
 
         // Close the popup when the close button is clicked
         popupClose.addEventListener('click', () => {
             popupOverlay.style.display = 'none';
+            // Store that the popup was closed and trigger it to show again after 10 seconds
+            sessionStorage.setItem('popupClosed', 'true');
+            setTimeout(() => {
+                popupOverlay.style.display = 'flex';
+            }, 10000); // 10000 milliseconds = 10 seconds
         });
 
         // Close the popup when clicking outside of it
         popupOverlay.addEventListener('click', (e) => {
             if (e.target === popupOverlay) {
                 popupOverlay.style.display = 'none';
+                sessionStorage.setItem('popupClosed', 'true');
+                setTimeout(() => {
+                    popupOverlay.style.display = 'flex';
+                }, 10000); // Show again after 10 seconds
             }
         });
     });
@@ -169,16 +176,14 @@
 
     form.addEventListener('submit', e => {
         e.preventDefault();
-
-        // Proceed with form submission
         fetch(scriptURL, { method: 'POST', body: new FormData(form) })
             .then(response => {
                 alert("Thank you! Your form has been submitted successfully.");
-                // Save the submitted status to prevent showing the popup again
-                setLocalStorage('formSubmitted', 'true');
-                // Automatically close the popup after submission
-                document.getElementById('bugsPopOverlay').style.display = 'none';
+                // Set cookie to prevent showing the popup again for 30 days
+                setCookie('formSubmitted', 'true', 30);
+                sessionStorage.removeItem('popupClosed');
             })
+            .then(() => { window.location.reload(); })
             .catch(error => console.error('Error!', error.message));
     });
 </script>
