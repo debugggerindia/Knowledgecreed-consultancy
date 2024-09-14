@@ -139,11 +139,12 @@
         .bugs-pop-content {
             text-align: center;
         }
-        
-        @media (max-width: 600px) {
-            .bugs-pop-container {
-                width: 95%;
-            }
+
+        .bugs-pop-up-phone-call {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            color: #fff;
         }
         
         /* Floating Button */
@@ -229,7 +230,13 @@
             border-radius: 50%;
             animation: rotation 1s linear infinite;
         }
-        
+
+         @media (max-width: 600px) {
+            .bugs-pop-container {
+                width: 95%;
+            }
+        }
+
         @keyframes rotation {
             0% {
                 transform: rotate(0deg);
@@ -237,12 +244,5 @@
             100% {
                 transform: rotate(360deg);
             }
-        }
-        
-        .bugs-pop-up-phone-call {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            color: #fff;
         }
         
