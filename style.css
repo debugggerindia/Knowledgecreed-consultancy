@@ -103,7 +103,7 @@
             animation: shake 0.8s ease-in-out infinite;
         }    
 
-        
+
         .bugs-pop-overlay {
             display: none;
             position: fixed;
