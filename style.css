@@ -148,7 +148,7 @@
         }
         
         /* Floating Button */
-        .bugs-floating-btn {
+        button#bugs-floatingButton {
             position: fixed;
             bottom: 20px;
             right: 100px;
