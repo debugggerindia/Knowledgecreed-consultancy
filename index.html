@@ -66,11 +66,22 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WRQ2KGTN');</script>
     <!-- End Google Tag Manager -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8EXJC8BTKZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-8EXJC8BTKZ');
+    </script>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
     <link rel="stylesheet" href="/style.css"/>
+    
     <style>
         
         .bugs-pop-overlay {
@@ -273,7 +284,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         // Show the popup automatically after 5 seconds
         setTimeout(() => {
             popupOverlay.style.display = 'flex';
-        }, 5000);
+        }, 20000);
 
         // Close the popup when the close button is clicked
         popupClose.addEventListener('click', () => {
