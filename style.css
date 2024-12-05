@@ -56,7 +56,7 @@ p{
 }
 
     /* Basic styling for the floating WhatsApp button */
-    .whatsapp-float-button {
+.whatsapp-float-button {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -166,36 +166,30 @@ button#bugs-floatingButton {
     font-size: 18px;
     cursor: pointer;
     z-index: 1001;
-    -webkit-animation: glowing 1500ms infinite;
-    -moz-animation: glowing 1500ms infinite;
-    -o-animation: glowing 1500ms infinite;
-    animation: glowing 1500ms infinite;
 }
 
-@-webkit-keyframes glowing {
-    0% { background-color: #4f86f9; -webkit-box-shadow: 0 0 3px #4f86f9; }
-    50% { background-color: #6a9bf1; -webkit-box-shadow: 0 0 40px #6a9bf1; }
-    100% { background-color: #4f86f9; -webkit-box-shadow: 0 0 3px #4f86f9; }
+.blink {
+    -webkit-animation-direction: normal;
+    -webkit-animation-duration: 5s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: blink;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-direction: normal;
+    -moz-animation-duration: 5s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-name: blink;
+    -moz-animation-timing-function: linear;
+    animation-direction: normal;
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+    animation-name: blink;
+    animation-timing-function: linear;
 }
-
-@-moz-keyframes glowing {
-    0% { background-color: #4f86f9; -moz-box-shadow: 0 0 3px #4f86f9; }
-    50% { background-color: #6a9bf1; -moz-box-shadow: 0 0 40px #6a9bf1; }
-    100% { background-color: #4f86f9; -moz-box-shadow: 0 0 3px #4f86f9; }
+@keyframes blink {
+    50% {
+        background: #000;
+    }
 }
-
-@-o-keyframes glowing {
-    0% { background-color: #4f86f9; box-shadow: 0 0 3px #4f86f9; }
-    50% { background-color: #6a9bf1; box-shadow: 0 0 40px #6a9bf1; }
-    100% { background-color: #4f86f9; box-shadow: 0 0 3px #4f86f9; }
-}
-
-@keyframes glowing {
-    0% { background-color: #4f86f9; box-shadow: 0 0 3px #4f86f9; }
-    50% { background-color: #6a9bf1; box-shadow: 0 0 40px #6a9bf1; }
-    100% { background-color: #4f86f9; box-shadow: 0 0 3px #4f86f9; }
-}
-
 
 .bugs-floating-btn:hover {
     background-color: #333333;

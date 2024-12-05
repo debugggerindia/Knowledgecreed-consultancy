@@ -151,7 +151,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <!-- Floating Button -->
-<button id="bugs-floatingButton" class="bugs-floating-btn">Contact Us</button>
+<button id="bugs-floatingButton" class="bugs-floating-btn blink">Contact Us</button>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -200,6 +200,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     popupOverlay.style.display = 'none';
                     // Hide loader
                     loader.style.display = 'none';
+                    window.location.href = '/thank-you.html';
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
@@ -732,7 +733,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <footer class="relative bg-cover bg-center bg-no-repeat" style="background-image: url('./assets/medical.jpg');">
         <div class="footer-overlay absolute inset-0"></div>
         <div class="relative container mx-auto px-6 py-6 md:py-8 lg:py-10">
-          <div class="flex justify-between grid-cols-1 md:grid-cols-2 gap-8 items-center text-white">
+          <div class="flex justify-between grid-cols-1 md:grid-cols-2 gap-8 flex-col md:flex-row items-center text-white">
             
             <!-- Contact Information -->
             <div class="">
