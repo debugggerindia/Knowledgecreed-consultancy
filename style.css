@@ -298,6 +298,11 @@ button#bugs-floatingButton {
 .swiper-button-prev:after{
     font-size: 20px;
 }
+@media screen and (max-width:768px){
+   .map-container{
+    width: 100%;
+   }
+}
 @media screen and (min-width:769px){
     .slider-container {
         width: 100%;
